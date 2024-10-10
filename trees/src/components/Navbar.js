@@ -164,7 +164,7 @@ export default function Navbar() {
   const pathname = usePathname();
 
   const navItems = [
-    { name: "Shop", icon: ShoppingBag, href: "/shop" },
+    { name: "Shop", icon: ShoppingBag, href: "/products" },
     { name: "Event", icon: Calendar, href: "/event" },
     { name: "Contact us", icon: Phone, href: "/contact-us" },
     { name: "About us", icon: Info, href: "/about-us" },
