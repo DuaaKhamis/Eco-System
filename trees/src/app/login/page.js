@@ -21,7 +21,7 @@ export default function Login() {
     if (res.ok) {
       const { token } = await res.json();
       setToken(token);
-      router.push('/dashboard');
+      router.push('/');
     } else {
       // Handle error
     }
