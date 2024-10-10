@@ -20,7 +20,9 @@ export default function Login() {
     });
     if (res.ok) {
       const { token } = await res.json();
-      setToken(token);
+      // setToken(token);
+      localStorage.setItem("token", token);
+      window.dispatchEvent(new Event("storage"));
       router.push('/');
     } else {
       // Handle error
