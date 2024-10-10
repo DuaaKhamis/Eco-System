@@ -51,7 +51,9 @@ export default function EventDetailsPage({ params }) {
   if (error) return <div>Error: {error}</div>;
   if (!event) return <div>Event not found</div>;
 
-  const googleMapsUrl = `https://www.google.com/maps/embed/v1/place?q=${encodeURIComponent(event.location)}&zoom=15`;
+  const googleMapsUrl = `https://maps.google.com/maps?width=100%25&height=600&hl=en&q=${encodeURIComponent(
+    event.location
+  )}&t=&z=14&ie=UTF8&iwloc=B&output=embed`;
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -79,6 +81,7 @@ export default function EventDetailsPage({ params }) {
               src={googleMapsUrl}
               allowFullScreen
             ></iframe>
+           
           <h2 className="text-2xl font-semibold mt-8 mb-4">Participants</h2>
           <ul className="space-y-2">
             {event.participants.map((participant) => (
