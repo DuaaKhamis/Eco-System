@@ -13,7 +13,7 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await fetch('/api/auth/login', {
+    const res = await fetch("/api/auth/login", {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password }),
@@ -21,7 +21,7 @@ export default function Login() {
     if (res.ok) {
       const { token } = await res.json();
       setToken(token);
-      router.push('/dashboard');
+      router.push('/');
     } else {
       // Handle error
     }

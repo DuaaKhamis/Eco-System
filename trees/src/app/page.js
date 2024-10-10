@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
+
 export default function Home() {
   return (
     <div className="grid grid-rows-[auto_1fr_auto] min-h-screen bg-green-50 text-green-900 font-sans">
@@ -13,6 +14,9 @@ export default function Home() {
             </Link>
             <Link href="/signup" className="bg-white hover:bg-green-100 text-green-800 font-bold py-2 px-4 rounded transition-colors duration-300">
               Sign Up
+            </Link>
+            <Link href="/shop" className="bg-white hover:bg-green-100 text-green-800 font-bold py-2 px-4 rounded transition-colors duration-300">
+              Shop
             </Link>
           </div>
         </nav>

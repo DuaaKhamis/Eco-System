@@ -9,7 +9,7 @@ export function authMiddleware(handler) {
         return NextResponse.json({ message: "Authentication required" }, { status: 401 });
       }
 
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      const decoded = jwt.verify(token, "nsadj322masdj382");
       req.userId = decoded.userId;
 
       return handler(req);
