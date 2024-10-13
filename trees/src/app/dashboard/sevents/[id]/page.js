@@ -88,32 +88,26 @@ export default function EventDetailsPage({ params }) {
     <div className="min-h-screen bg-green-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         <div className="bg-white rounded-xl shadow-2xl overflow-hidden">
-          <div className="relative h-96">
-            <Image
-              src={event.imageUrl || "/placeholder-event.jpg"}
-              alt={event.name}
-              layout="fill"
-              objectFit="cover"
-              className="transition-opacity duration-300"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-green-900 to-transparent"></div>
-            <div className="absolute bottom-0 left-0 right-0 p-8">
-              <h1 className="text-4xl font-bold text-white mb-2">
+          <div className="md:flex">
+            <div className="md:w-1/3 relative h-64 md:h-auto">
+              <Image
+                src={event.imageUrl || "/placeholder-event.jpg"}
+                alt={event.name}
+                layout="fill"
+                objectFit="cover"
+                className="transition-opacity duration-300"
+              />
+            </div>
+            <div className="md:w-2/3 p-8">
+              <h1 className="text-3xl font-bold text-green-800 mb-2">
                 {event.name}
               </h1>
-              <p className="text-green-100 text-lg">{event.description}</p>
-            </div>
-          </div>
-
-          <div className="p-8">
-            <div className="flex flex-wrap -mx-4 mb-8">
-              <div className="w-full md:w-1/2 px-4 mb-4">
+              <p className="text-green-600 text-lg mb-4">{event.description}</p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="flex items-center text-green-700">
                   <Calendar className="mr-2" />
                   <span>{new Date(event.date).toLocaleDateString()}</span>
                 </div>
-              </div>
-              <div className="w-full md:w-1/2 px-4 mb-4">
                 <div className="flex items-center text-green-700">
                   <Clock className="mr-2" />
                   <span>
@@ -123,21 +117,19 @@ export default function EventDetailsPage({ params }) {
                     })}
                   </span>
                 </div>
-              </div>
-              <div className="w-full md:w-1/2 px-4 mb-4">
                 <div className="flex items-center text-green-700">
                   <Tag className="mr-2" />
                   <span>{event.category}</span>
                 </div>
-              </div>
-              <div className="w-full md:w-1/2 px-4 mb-4">
                 <div className="flex items-center text-green-700">
                   <MapPin className="mr-2" />
                   <span>{event.location}</span>
                 </div>
               </div>
             </div>
+          </div>
 
+          <div className="p-8">
             <div className="mb-8">
               <h2 className="text-2xl font-semibold text-green-800 mb-4">
                 Location
