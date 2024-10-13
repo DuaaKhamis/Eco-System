@@ -146,6 +146,8 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+import CartIcon from '../components/cart/CartIcon';
+import { useCart } from '../context/CartContext';
 import {
   LogOut,
   User,
@@ -158,7 +160,8 @@ import {
 } from "lucide-react";
 
 export default function Navbar() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { isLoggedIn, setIsLoggedIn, clearCart } = useCart();
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
@@ -184,6 +187,7 @@ export default function Navbar() {
   const handleLogout = () => {
     localStorage.removeItem("token");
     setIsLoggedIn(false);
+    clearCart();
     router.push("/");
   };
 
@@ -220,6 +224,8 @@ export default function Navbar() {
                 Profile
               </Link>
             )}
+             {/* إضافة أيقونة السلة هنا */}
+  <CartIcon className="w-6 h-6 text-gray-600 hover:text-green-700 transition duration-300" />
           </div>
 
           {/* Mobile Menu Button */}
@@ -267,6 +273,7 @@ export default function Navbar() {
               </>
             )}
           </div>
+         
         </div>
 
         {/* Mobile Menu */}
@@ -306,6 +313,10 @@ export default function Navbar() {
                   </div>
                 </Link>
               )}
+               {/* إضافة أيقونة السلة هنا */}
+      <div className="flex justify-center mt-4">
+        <CartIcon className="w-6 h-6 text-gray-600 hover:text-green-700 transition duration-300" />
+      </div>
               <div className="mt-4">
                 {isLoggedIn ? (
                   <button
@@ -339,3 +350,8 @@ export default function Navbar() {
     </header>
   );
 }
+
+// <div className="container mx-auto flex justify-between items-center">
+// <Link href="/" className="text-xl font-bold">Your Store</Link>
+// <CartIcon />
+// </div>

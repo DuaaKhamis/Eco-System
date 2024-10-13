@@ -13,17 +13,12 @@
   --background-end-rgb: 255, 255, 255;
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-}
-
 /* تطبيق الخط على العناوين فقط */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-shadows-into-light-two);
+}
+@layer base {
+  :root {
+    --radius: 0.5rem;
+  }
 }
