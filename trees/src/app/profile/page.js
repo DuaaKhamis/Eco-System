@@ -1,8 +1,9 @@
-'use client'
+'use client';
 import React, { useState, useEffect } from 'react';
-import { getToken } from '../../middlewares/auth';
+import { getToken, isAuthenticated } from '../../middlewares/auth';
 import { motion, AnimatePresence } from 'framer-motion';
-import { User, Mail, Edit2, Save, X, Star, Calendar, Award, Settings, Zap } from 'lucide-react';
+import { User, Mail, Edit2, Save, X, Star, Calendar, Award, Settings, MapPin } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 const TabButton = ({ icon: Icon, label, isActive, onClick }) => (
     <button
@@ -22,9 +23,14 @@ const Profile = () => {
     const [activeTab, setActiveTab] = useState('profile');
     const [editing, setEditing] = useState({ name: false, email: false });
     const [editedUser, setEditedUser] = useState({ name: '', email: '' });
+    const router = useRouter();
 
     useEffect(() => {
         const fetchProfile = async () => {
+            if (!isAuthenticated()) {
+                router.push('/login');
+                return;
+            }
             try {
                 const token = getToken();
                 const response = await fetch('/api/profile', {
@@ -126,6 +132,7 @@ const Profile = () => {
                                             <div className="md:col-span-2 space-y-6">
                                                 <ProfileField
                                                     icon={User}
+                                                    label="Name"
                                                     value={user.name}
                                                     editing={editing.name}
                                                     editedValue={editedUser.name}
@@ -136,6 +143,7 @@ const Profile = () => {
                                                 />
                                                 <ProfileField
                                                     icon={Mail}
+                                                    label="Email"
                                                     value={user.email}
                                                     editing={editing.email}
                                                     editedValue={editedUser.email}
@@ -144,7 +152,7 @@ const Profile = () => {
                                                     onCancel={() => handleCancel('email')}
                                                     onChange={(e) => setEditedUser(prev => ({ ...prev, email: e.target.value }))}
                                                 />
-                                                <div className="flex items-center text-gray-600 items-end">
+                                                <div className="flex items-center text-gray-600">
                                                     <Settings className="h-5 w-5 mr-2" />
                                                     <span className="text-sm">Member since: {new Date(user.createdAt).toLocaleDateString()}</span>
                                                 </div>
@@ -164,32 +172,39 @@ const Profile = () => {
                                 )}
                                 {activeTab === 'events' && (
                                     <div className="space-y-6">
-                                        <h3 className="text-2xl font-bold text-gray-900 mb-4">Events Participated</h3>
-                                        {user.eventsParticipated && user.eventsParticipated.length > 0 ? (
+                                        <h3 className="text-2xl font-bold text-gray-900 mb-4">Events Registered</h3>
+                                        {user.registeredEvents && user.registeredEvents.length > 0 ? (
                                             <div className="space-y-4">
-                                                {user.eventsParticipated.map((event, index) => (
+                                                {user.registeredEvents.map((event, index) => (
                                                     <motion.div
-                                                        key={index}
+                                                        key={event}
                                                         initial={{ opacity: 0, y: 20 }}
                                                         animate={{ opacity: 1, y: 0 }}
                                                         transition={{ duration: 0.3, delay: index * 0.1 }}
                                                         className="bg-white p-4 rounded-lg shadow-md border border-gray-200"
                                                     >
-                                                        <div className="flex items-center justify-between">
-                                                            <div className="flex items-center">
+                                                        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center">
+                                                            <div className="flex items-center mb-2 sm:mb-0">
                                                                 <Award className="h-6 w-6 text-green-500 mr-2" />
-                                                                <span className="font-medium">{event.eventId}</span>
+
+
+                                                                <span className="font-medium">{event.name}</span>
                                                             </div>
                                                             <div className="flex items-center text-gray-600">
                                                                 <Calendar className="h-4 w-4 mr-1" />
-                                                                <span className="text-sm">{new Date(event.participationDate).toLocaleDateString()}</span>
+                                                                <span className="text-sm">{new Date(event.date).toLocaleDateString()}</span>
                                                             </div>
+                                                        </div>
+                                                        <p className="text-gray-600 mt-2">{event.description}</p>
+                                                        <div className="flex items-center mt-2 text-gray-500">
+                                                            <MapPin className="h-4 w-4 mr-1" />
+                                                            <span className="text-sm">{event.location}</span>
                                                         </div>
                                                     </motion.div>
                                                 ))}
                                             </div>
                                         ) : (
-                                            <p className="text-center text-gray-600">You haven't participated in any events yet.</p>
+                                            <p className="text-center text-gray-600">You haven't registered for any events yet.</p>
                                         )}
                                     </div>
                                 )}
