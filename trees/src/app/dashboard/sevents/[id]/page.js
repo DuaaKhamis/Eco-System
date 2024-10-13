@@ -1,12 +1,24 @@
-// File: src/app/events/[id]/page.js
-'use client';
-import { useState, useEffect } from 'react';
-import Image from 'next/image';
+"use client";
+
+import React, { useState, useEffect } from "react";
+import Image from "next/image";
+import {
+  Calendar,
+  MapPin,
+  Users,
+  Award,
+  Clock,
+  Tag,
+  ChevronDown,
+  ChevronUp,
+  Plus,
+} from "lucide-react";
 
 export default function EventDetailsPage({ params }) {
   const [event, setEvent] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showParticipants, setShowParticipants] = useState(false);
 
   useEffect(() => {
     fetchEventDetails();
@@ -15,9 +27,7 @@ export default function EventDetailsPage({ params }) {
   const fetchEventDetails = async () => {
     try {
       const res = await fetch(`/api/superevents/${params.id}`);
-      if (!res.ok) {
-        throw new Error('Failed to fetch event details');
-      }
+      if (!res.ok) throw new Error("Failed to fetch event details");
       const data = await res.json();
       setEvent(data);
     } catch (error) {
@@ -30,75 +40,164 @@ export default function EventDetailsPage({ params }) {
   const handleAddPoints = async (userId, points) => {
     try {
       const res = await fetch(`/api/superevents/${params.id}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ userId, points }),
       });
-      if (!res.ok) {
-        throw new Error('Failed to update points');
-      }
+      if (!res.ok) throw new Error("Failed to update points");
       const data = await res.json();
       setEvent(data.event);
     } catch (error) {
-      console.error('Error updating points:', error);
-      alert('Failed to update points. Please try again.');
+      console.error("Error updating points:", error);
+      alert("Failed to update points. Please try again.");
     }
   };
 
-  if (isLoading) return <div>Loading event details...</div>;
-  if (error) return <div>Error: {error}</div>;
-  if (!event) return <div>Event not found</div>;
+  if (isLoading)
+    return (
+      <div className="flex items-center justify-center h-screen bg-green-50">
+        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-green-500"></div>
+      </div>
+    );
+
+  if (error)
+    return (
+      <div className="flex items-center justify-center h-screen bg-green-50">
+        <div className="bg-white p-8 rounded-lg shadow-lg text-center">
+          <h2 className="text-2xl font-bold text-red-600 mb-4">Error</h2>
+          <p className="text-gray-700">{error}</p>
+        </div>
+      </div>
+    );
+
+  if (!event)
+    return (
+      <div className="flex items-center justify-center h-screen bg-green-50">
+        <div className="bg-white p-8 rounded-lg shadow-lg text-center">
+          <h2 className="text-2xl font-bold text-yellow-600 mb-4">Not Found</h2>
+          <p className="text-gray-700">Event not found</p>
+        </div>
+      </div>
+    );
 
   const googleMapsUrl = `https://maps.google.com/maps?width=100%25&height=600&hl=en&q=${encodeURIComponent(
     event.location
   )}&t=&z=14&ie=UTF8&iwloc=B&output=embed`;
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-4">{event.name}</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div>
-          <Image
-            src={event.imageUrl || '/placeholder-event.jpg'}
-            alt={event.name}
-            width={600}
-            height={400}
-            className="rounded-lg shadow-md"
-          />
-          <p className="mt-4 text-gray-600">{event.description}</p>
-          <p className="mt-2"><strong>Date:</strong> {new Date(event.date).toLocaleDateString()}</p>
-          <p><strong>Category:</strong> {event.category}</p>
-        </div>
-        <div>
-          <h2 className="text-2xl font-semibold mb-4">Location</h2>
-          <iframe
-              width="100%"
-              height="300"
-              frameBorder="0"
-              style={{ border: 0 }}
-              src={googleMapsUrl}
-              allowFullScreen
-            ></iframe>
-           
-          <h2 className="text-2xl font-semibold mt-8 mb-4">Participants</h2>
-          <ul className="space-y-2">
-            {event.participants.map((participant) => (
-              <li key={participant._id} className="flex justify-between items-center">
-                <span>{participant.name} - {participant.points} points</span>
-                <button
-                  onClick={() => handleAddPoints(participant._id, 10)}
-                  className="bg-green-500 hover:bg-green-600 text-white font-bold py-1 px-2 rounded"
-                >
-                  Add 10 Points
-                </button>
-              </li>
-            ))}
-          </ul>
+    <div className="min-h-screen bg-green-50 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto">
+        <div className="bg-white rounded-xl shadow-2xl overflow-hidden">
+          <div className="relative h-96">
+            <Image
+              src={event.imageUrl || "/placeholder-event.jpg"}
+              alt={event.name}
+              layout="fill"
+              objectFit="cover"
+              className="transition-opacity duration-300"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-green-900 to-transparent"></div>
+            <div className="absolute bottom-0 left-0 right-0 p-8">
+              <h1 className="text-4xl font-bold text-white mb-2">
+                {event.name}
+              </h1>
+              <p className="text-green-100 text-lg">{event.description}</p>
+            </div>
+          </div>
+
+          <div className="p-8">
+            <div className="flex flex-wrap -mx-4 mb-8">
+              <div className="w-full md:w-1/2 px-4 mb-4">
+                <div className="flex items-center text-green-700">
+                  <Calendar className="mr-2" />
+                  <span>{new Date(event.date).toLocaleDateString()}</span>
+                </div>
+              </div>
+              <div className="w-full md:w-1/2 px-4 mb-4">
+                <div className="flex items-center text-green-700">
+                  <Clock className="mr-2" />
+                  <span>
+                    {new Date(event.date).toLocaleTimeString([], {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}
+                  </span>
+                </div>
+              </div>
+              <div className="w-full md:w-1/2 px-4 mb-4">
+                <div className="flex items-center text-green-700">
+                  <Tag className="mr-2" />
+                  <span>{event.category}</span>
+                </div>
+              </div>
+              <div className="w-full md:w-1/2 px-4 mb-4">
+                <div className="flex items-center text-green-700">
+                  <MapPin className="mr-2" />
+                  <span>{event.location}</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="mb-8">
+              <h2 className="text-2xl font-semibold text-green-800 mb-4">
+                Location
+              </h2>
+              <div className="aspect-w-16 aspect-h-9 rounded-lg overflow-hidden">
+                <iframe
+                  src={googleMapsUrl}
+                  width="100%"
+                  height="100%"
+                  frameBorder="0"
+                  style={{ border: 0 }}
+                  allowFullScreen=""
+                  aria-hidden="false"
+                  tabIndex="0"
+                ></iframe>
+              </div>
+            </div>
+
+            <div>
+              <button
+                onClick={() => setShowParticipants(!showParticipants)}
+                className="w-full bg-green-600 text-white py-3 px-4 rounded-lg hover:bg-green-700 transition-colors duration-200 flex items-center justify-between mb-4"
+              >
+                <span className="text-lg font-semibold">Participants</span>
+                {showParticipants ? <ChevronUp /> : <ChevronDown />}
+              </button>
+
+              {showParticipants && (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+                  {event.participants.map((participant) => (
+                    <div
+                      key={participant._id}
+                      className="bg-green-100 rounded-lg p-4 flex flex-col"
+                    >
+                      <div className="flex items-center mb-2">
+                        <Users className="text-green-600 mr-2" />
+                        <span className="font-semibold">
+                          {participant.name}
+                        </span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-green-700">
+                          {participant.points} points
+                        </span>
+                        <button
+                          onClick={() => handleAddPoints(participant._id, 10)}
+                          className="bg-green-500 text-white hover:bg-green-600 font-bold py-2 px-4 rounded-full transition-colors duration-200 flex items-center"
+                        >
+                          <Plus className="w-4 h-4 mr-1" />
+                          <span>10</span>
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </div>
   );
-
 }

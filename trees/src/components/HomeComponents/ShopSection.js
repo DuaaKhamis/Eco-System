@@ -4,6 +4,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const ShopSection = () => {
   const router = useRouter();
@@ -42,14 +43,16 @@ const ShopSection = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
         >
-          <motion.button
-            className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-8 rounded-full text-lg transition duration-300"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => router.push("/shop")}
-          >
-            Shop Now and Plant Trees
-          </motion.button>
+          <Link href="/products">
+            <motion.button
+              className="bg-green-700 hover:bg-green-600 text-white font-bold py-3 px-8 rounded-full text-lg transition duration-300"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => router.push("/shop")}
+            >
+              Shop Now and Plant Trees
+            </motion.button>
+          </Link>
         </motion.div>
       </div>
     </section>
