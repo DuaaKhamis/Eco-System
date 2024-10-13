@@ -125,25 +125,57 @@ export default function EventsManagement() {
           <table className="min-w-full">
             <thead className="bg-gray-50">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Location</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Name
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Date
+                </th>
+                {/* --Aya-- */}
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Governorate
+                </th>
+                {/* ----- */}
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Location
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Category
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Actions
+                </th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
               {events.map((event) => (
                 <tr key={event._id}>
                   <td className="px-6 py-4 whitespace-nowrap">{event.name}</td>
-                  <td className="px-6 py-4 whitespace-nowrap">{new Date(event.date).toLocaleDateString()}</td>
-                  <td className="px-6 py-4 whitespace-nowrap">{event.location}</td>
-                  <td className="px-6 py-4 whitespace-nowrap">{event.category}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    {new Date(event.date).toLocaleDateString()}
+                  </td>
+                  {/* --Aya-- */}
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    {event.governorate}
+                  </td>
+                  {/* ------ */}
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    {event.location}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    {event.category}
+                  </td>
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <button onClick={() => setEditingEvent(event)} className="text-indigo-600 hover:text-indigo-900 mr-4">
+                    <button
+                      onClick={() => setEditingEvent(event)}
+                      className="text-indigo-600 hover:text-indigo-900 mr-4"
+                    >
                       <FaEdit />
                     </button>
-                    <button onClick={() => handleDeleteEvent(event._id)} className="text-red-600 hover:text-red-900">
+                    <button
+                      onClick={() => handleDeleteEvent(event._id)}
+                      className="text-red-600 hover:text-red-900"
+                    >
                       <FaTrash />
                     </button>
                   </td>

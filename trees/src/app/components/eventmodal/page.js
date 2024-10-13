@@ -1,16 +1,20 @@
-
-import { useState } from 'react';
+import { useState } from "react";
 
 export default function EventModal({ event, onClose, onSave }) {
-  const [formData, setFormData] = useState(event || {
-    name: '',
-    description: '',
-    date: '',
-    location: '',
-    category: '',
-    imageUrl: '',
-  });
-  const [error, setError] = useState('');
+  const [formData, setFormData] = useState(
+    event || {
+      name: "",
+      description: "",
+      date: "",
+      // -----------
+      governorate: "",
+      // ----------
+      location: "",
+      category: "",
+      imageUrl: "",
+    }
+  );
+  const [error, setError] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -19,27 +23,59 @@ export default function EventModal({ event, onClose, onSave }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setError('');
+    setError("");
 
-    const requiredFields = ['name', 'description', 'date', 'location', 'category'];
-    const missingFields = requiredFields.filter(field => !formData[field]);
+    // const requiredFields = ['name', 'description', 'date', 'location', 'category'];
+    const requiredFields = [
+      "name",
+      "description",
+      "date",
+      "governorate",
+      "location",
+      "category",
+    ];
+
+    const missingFields = requiredFields.filter((field) => !formData[field]);
 
     if (missingFields.length > 0) {
-      setError(`Please fill in all required fields: ${missingFields.join(', ')}`);
+      setError(
+        `Please fill in all required fields: ${missingFields.join(", ")}`
+      );
       return;
     }
 
     onSave(formData);
   };
+  // ---------
+  const governorates = [
+    "Amman",
+    "Irbid",
+    "Zarqa",
+    "Mafraq",
+    "Ajloun",
+    "Jerash",
+    "Balqa",
+    "Madaba",
+    "Karak",
+    "Tafilah",
+    "Ma'an",
+    "Aqaba",
+  ];
+  // ------------
 
   return (
     <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex items-center justify-center">
       <div className="bg-white p-8 rounded-lg shadow-xl w-full max-w-md">
-        <h2 className="text-2xl font-bold mb-4">{event ? 'Edit Event' : 'Add New Event'}</h2>
+        <h2 className="text-2xl font-bold mb-4">
+          {event ? "Edit Event" : "Add New Event"}
+        </h2>
         {error && <p className="text-red-500 mb-4">{error}</p>}
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="name"
+            >
               Name *
             </label>
             <input
@@ -53,7 +89,10 @@ export default function EventModal({ event, onClose, onSave }) {
             />
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="description">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="description"
+            >
               Description *
             </label>
             <textarea
@@ -66,7 +105,10 @@ export default function EventModal({ event, onClose, onSave }) {
             />
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="date">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="date"
+            >
               Date *
             </label>
             <input
@@ -79,8 +121,36 @@ export default function EventModal({ event, onClose, onSave }) {
               required
             />
           </div>
+          {/* ---------- */}
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="location">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="governorate"
+            >
+              Governorate *
+            </label>
+            <select
+              id="governorate"
+              name="governorate"
+              value={formData.governorate}
+              onChange={handleChange}
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              required
+            >
+              <option value="">Select a governorate</option>
+              {governorates.map((gov) => (
+                <option key={gov} value={gov}>
+                  {gov}
+                </option>
+              ))}
+            </select>
+          </div>
+          {/* ------------ */}
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="location"
+            >
               Location *
             </label>
             <input
@@ -94,7 +164,10 @@ export default function EventModal({ event, onClose, onSave }) {
             />
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="category">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="category"
+            >
               Category *
             </label>
             <select
@@ -112,7 +185,10 @@ export default function EventModal({ event, onClose, onSave }) {
             </select>
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="imageUrl">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="imageUrl"
+            >
               Image URL
             </label>
             <input
