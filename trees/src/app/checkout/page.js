@@ -2172,7 +2172,7 @@ const CheckoutPage = () => {
 
   return (
     <PayPalScriptProvider options={{ "client-id": "ASIiVfZXTYzsxT9mZ18IhENq08lU5oKUDYp_RGyOB1TYbxDPCL-Yl4l0zniwz1ENGxDy7s4NdsbqIzVp" }}>
-      <div className="container mx-auto p-6 bg-gradient-to-b from-green-50 to-white">
+      <div className="container mx-auto p-6 bg-white">
         <h1 className="text-4xl font-bold mb-8 text-green-800 flex items-center justify-center">
           <Leaf className="mr-2 text-green-600" />
           Eco-Friendly Checkout
@@ -2214,7 +2214,7 @@ const CheckoutPage = () => {
               <TabsContent value="shipping">
                 <h3 className="text-lg font-semibold mb-4 text-green-700 flex items-center">
                   <MapPin className="mr-2" />
-                  Shipping Information
+                  {/* Shipping Information */}
                 </h3>
                 <form onSubmit={(e) => { e.preventDefault(); setActiveTab("payment"); }}>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -2292,7 +2292,7 @@ const CheckoutPage = () => {
               <TabsContent value="payment">
                 <h3 className="text-lg font-semibold mb-4 text-green-700 flex items-center">
                   <CreditCard className="mr-2" />
-                  Payment Method
+                 Choose Payment Method
                 </h3>
                 <form onSubmit={handleSubmit}>
                   <div className="mb-4">
