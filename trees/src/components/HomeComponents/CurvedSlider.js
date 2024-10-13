@@ -220,14 +220,16 @@ const CurvedSlider = () => {
               &gt;
             </button>
           </div>
-
-          <div className="thumbnail absolute bottom-[50px] right-[50px] flex gap-5 z-20">
+{/* ---------------------------------- */}
+          {/* <div className="thumbnail absolute bottom-[50px] right-[50px] flex gap-5 z-20">
             {carouselItems.map((item, index) => (
               <div
                 key={index}
-                className={`item w-[150px] h-[220px] flex-shrink-0 relative cursor-pointer overflow-hidden ${
+                className={`item w-[150px] h-[220px] flex-shrink-0 relative cursor-pointer overflow-hidden
+                   ${
                   index === currentIndex ? "active" : ""
-                }`}
+                }
+                `}
                 onClick={() => showSlider("next", index)}
               >
                 <Image
@@ -245,14 +247,14 @@ const CurvedSlider = () => {
                 </div>
               </div>
             ))}
-          </div>
-
-          <div
+          </div> */}
+{/* ----------------------------- */}
+          {/* <div
             className="time absolute top-0 left-0 h-[3px] bg-[#f1683a] z-30 transition-all duration-[3000ms] ease-linear"
             style={{
               width: `${((currentIndex + 1) / carouselItems.length) * 100}%`,
-            }}
-          ></div>
+            }} */}
+          {/* ></div> */}
         </div>
       </div>
     </>
