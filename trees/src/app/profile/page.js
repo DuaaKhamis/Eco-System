@@ -2,8 +2,9 @@
 import React, { useState, useEffect } from 'react';
 import { getToken, isAuthenticated } from '../../middlewares/auth';
 import { motion, AnimatePresence } from 'framer-motion';
-import { User, Mail, Edit2, Save, X, Star, Calendar, Award, Settings, MapPin } from 'lucide-react';
+import { User, Mail, Edit2, Save, X, Star, Calendar, Award, Settings, MapPin, ShoppingBag, Package, CreditCard } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 const TabButton = ({ icon: Icon, label, isActive, onClick }) => (
     <button
@@ -91,6 +92,7 @@ const Profile = () => {
     const tabs = [
         { id: 'profile', label: 'Profile', icon: User },
         { id: 'events', label: 'Events', icon: Calendar },
+        { id: 'orders', label: 'Orders', icon: ShoppingBag },
     ];
 
     return (
@@ -177,7 +179,7 @@ const Profile = () => {
                                             <div className="space-y-4">
                                                 {user.registeredEvents.map((event, index) => (
                                                     <motion.div
-                                                        key={event}
+                                                        key={event._id}
                                                         initial={{ opacity: 0, y: 20 }}
                                                         animate={{ opacity: 1, y: 0 }}
                                                         transition={{ duration: 0.3, delay: index * 0.1 }}
@@ -186,8 +188,6 @@ const Profile = () => {
                                                         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center">
                                                             <div className="flex items-center mb-2 sm:mb-0">
                                                                 <Award className="h-6 w-6 text-green-500 mr-2" />
-
-
                                                                 <span className="font-medium">{event.name}</span>
                                                             </div>
                                                             <div className="flex items-center text-gray-600">
@@ -205,6 +205,72 @@ const Profile = () => {
                                             </div>
                                         ) : (
                                             <p className="text-center text-gray-600">You haven't registered for any events yet.</p>
+                                        )}
+                                    </div>
+                                )}
+                                {activeTab === 'orders' && (
+                                    <div className="space-y-6">
+                                        <h3 className="text-2xl font-bold text-gray-900 mb-4">Your Orders</h3>
+                                        {user.orders && user.orders.length > 0 ? (
+                                            <div className="space-y-4">
+                                                {user.orders.map((order, index) => (
+                                                    <motion.div
+                                                        key={order._id}
+                                                        initial={{ opacity: 0, y: 20 }}
+                                                        animate={{ opacity: 1, y: 0 }}
+                                                        transition={{ duration: 0.3, delay: index * 0.1 }}
+                                                        className="bg-white p-4 rounded-lg shadow-md border border-gray-200"
+                                                    >
+                                                        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-2">
+                                                            <div className="flex items-center mb-2 sm:mb-0">
+                                                                <Package className="h-6 w-6 text-green-500 mr-2" />
+                                                                <span className="font-medium">Order #{order._id.substr(-6)}</span>
+                                                            </div>
+                                                            <div className="flex items-center text-gray-600">
+                                                                <Calendar className="h-4 w-4 mr-1" />
+                                                                <span className="text-sm">{new Date(order.createdAt).toLocaleDateString()}</span>
+                                                            </div>
+                                                        </div>
+                                                        <div className="mt-2">
+                                                            <h4 className="text-lg font-semibold mb-2">Products:</h4>
+                                                            <ul className="space-y-2">
+                                                                {order.products.map((item, i) => (
+                                                                    <li key={i} className="flex items-center space-x-4">
+                                                                        <div className="w-16 h-16 relative">
+                                                                            <Image
+                                                                                src={item.product.imageUrl}
+                                                                                alt={item.product.title}
+                                                                                layout="fill"
+                                                                                objectFit="cover"
+                                                                                className="rounded-md"
+                                                                            />
+                                                                        </div>
+                                                                        <div className="flex-1">
+                                                                            <p className="font-medium">{item.product.title}</p>
+                                                                            <p className="text-sm text-gray-600">Quantity: {item.quantity}</p>
+                                                                            <p className="text-sm text-gray-600">Price: ${item.product.price.toFixed(2)}</p>
+                                                                        </div>
+                                                                    </li>
+                                                                ))}
+                                                            </ul>
+                                                        </div>
+                                                        <div className="mt-2 flex justify-between items-center">
+                                                            <span className="text-gray-600">
+                                                                Status: <span className="font-semibold capitalize">{order.status}</span>
+                                                            </span>
+                                                            <span className="text-gray-600">
+                                                                Total: <span className="font-semibold">${order.totalAmount.toFixed(2)}</span>
+                                                            </span>
+                                                        </div>
+                                                        <div className="mt-2 flex items-center text-gray-500">
+                                                            <CreditCard className="h-4 w-4 mr-1" />
+                                                            <span className="text-sm capitalize">{order.paymentInfo.method}</span>
+                                                        </div>
+                                                    </motion.div>
+                                                ))}
+                                            </div>
+                                        ) : (
+                                            <p className="text-center text-gray-600">You haven't placed any orders yet.</p>
                                         )}
                                     </div>
                                 )}
