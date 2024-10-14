@@ -28,12 +28,14 @@ const Footer = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
+            className="space-y-4"
           >
-            <h3 className="text-2xl font-bold text-green-800 mb-4">
-              GreenHope
-            </h3>
-            <p className="mb-4">
-              Together we plant a greener future for generations to come.
+            <div className="flex items-center space-x-2">
+              <Leaf className="w-8 h-8 text-green-600" />
+              <h3 className="text-3xl font-bold text-green-800">GreenHope</h3>
+            </div>
+            <p className="text-gray-600 max-w-xs">
+              Together we plant a greener future for generations to come. Join us in our mission to create a sustainable world.
             </p>
           </motion.div>
 
@@ -72,19 +74,18 @@ const Footer = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
           >
-            <h4 className="text-lg font-semibold mb-4 text-green-700">
-              Follow Us
-            </h4>
+            <h4 className="text-xl font-semibold mb-6 text-green-700">Follow Us</h4>
             <div className="flex space-x-4">
-              {socialIcons.map(({ Icon, href }, index) => (
+              {socialIcons.map(({ Icon, href, label }, index) => (
                 <motion.a
                   key={index}
                   href={href}
-                  className="text-green-600 hover:text-green-800 transition duration-300"
-                  whileHover={{ scale: 1.2 }}
+                  aria-label={label}
+                  className="bg-green-100 p-3 rounded-full text-green-600 hover:bg-green-200 hover:text-green-800 transition duration-300"
+                  whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
                 >
-                  <Icon size={24} />
+                  <Icon className="w-5 h-5" />
                 </motion.a>
               ))}
             </div>
@@ -92,12 +93,12 @@ const Footer = () => {
         </div>
 
         <motion.div
-          className="mt-8 pt-8 border-t border-gray-200 text-center"
+          className="mt-12 pt-8 border-t border-green-100 text-center"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.4 }}
         >
-          <p>&copy; 2024 GreenHope. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} GreenHope. All rights reserved.</p>
         </motion.div>
       </div>
     </footer>
@@ -105,3 +106,4 @@ const Footer = () => {
 };
 
 export default Footer;
+
