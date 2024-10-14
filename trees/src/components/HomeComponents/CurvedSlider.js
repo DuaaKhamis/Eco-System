@@ -392,7 +392,7 @@ const carouselItems = [
     thumbnailDescription: "Description",
   },
   {
-    image: "/images/bg5.jpg",
+    image: "/images/bg5.png",
     author: "Aya",
     title: "Every Heartbeat",
     topic: "Health",

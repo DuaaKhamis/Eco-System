@@ -138,7 +138,7 @@ export default function Login() {
   return (
     <div className="min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8 relative">
       <Image
-        src="/images/background.jpg"
+        src="/images/background.png"
         alt="Background"
         fill
         style={{ objectFit: "cover" }}
