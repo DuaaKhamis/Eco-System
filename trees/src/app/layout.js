@@ -12,7 +12,7 @@ const shadowsIntoLightTwo = Shadows_Into_Light_Two({
 });
 
 export const metadata = {
-  title: "TreeVerse",
+  title: "GreenHope",
   description: "Discover the World of Trees",
 };
 

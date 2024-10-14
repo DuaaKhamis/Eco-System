@@ -94,7 +94,7 @@ const ContactUs = () => {
     return (
         <>
             <Navbar/>
-        <div className="min-h-screen bg-white p-4 flex flex-col justify-center items-center">
+        <div className="min-h-screen mt-4 bg-white p-4 flex flex-col justify-center items-center">
             <motion.div
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
