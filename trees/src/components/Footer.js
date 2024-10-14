@@ -1,15 +1,7 @@
 "use client";
-
 import React from "react";
-import {
-  Facebook,
-  Twitter,
-  Instagram,
-  Youtube,
-  Mail,
-  Phone,
-  MapPin,
-} from "lucide-react";
+import Link from "next/link";
+import { Facebook, Twitter, Instagram, Youtube } from "lucide-react";
 import { motion } from "framer-motion";
 
 const Footer = () => {
@@ -20,10 +12,18 @@ const Footer = () => {
     { Icon: Youtube, href: "#" },
   ];
 
+  const quickLinks = [
+    { name: "Home", href: "/" },
+    { name: "Shop", href: "/products" },
+    { name: "Events", href: "/event" },
+    { name: "Leaderboard", href: "/leaderboard" },
+    { name: "Contact Us", href: "/contact-us" },
+  ];
+
   return (
     <footer className="bg-white text-gray-600 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] mt-2">
       <div className="container mx-auto px-6 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -45,43 +45,25 @@ const Footer = () => {
             <h4 className="text-lg font-semibold mb-4 text-green-700">
               Quick Links
             </h4>
-            <ul className="space-y-2">
-              {["Home", "Shop", "Event", "About Us", "Contact Us"].map(
-                (item, index) => (
-                  <li key={index}>
-                    <a
-                      href="#"
-                      className="hover:text-green-500 transition duration-300"
-                    >
-                      {item}
-                    </a>
-                  </li>
-                )
-              )}
-            </ul>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
-            <h4 className="text-lg font-semibold mb-4 text-green-700">
-              Contact Us
-            </h4>
-            <div className="space-y-2">
-              <p className="flex items-center">
-                <Mail size={18} className="mr-2 text-green-600" />
-                info@greenhope.org
-              </p>
-              <p className="flex items-center">
-                <Phone size={18} className="mr-2 text-green-600" />
-                +1 234 567 8900
-              </p>
-              <p className="flex items-center">
-                <MapPin size={18} className="mr-2 text-green-600" />
-                123 Green Street, Earth City
-              </p>
+            <div className="grid grid-cols-2 gap-2">
+              {quickLinks.slice(0, 3).map((item, index) => (
+                <Link
+                  key={index}
+                  href={item.href}
+                  className="hover:text-green-500 transition duration-300"
+                >
+                  {item.name}
+                </Link>
+              ))}
+              {quickLinks.slice(3).map((item, index) => (
+                <Link
+                  key={index + 3}
+                  href={item.href}
+                  className="hover:text-green-500 transition duration-300"
+                >
+                  {item.name}
+                </Link>
+              ))}
             </div>
           </motion.div>
 

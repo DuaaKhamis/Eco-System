@@ -173,7 +173,7 @@ export default function SignUp() {
       />
       <div className="sm:mx-auto sm:w-full sm:max-w-md relative z-10">
         <h2 className="mt-6 text-center text-3xl font-extrabold text-green-900">
-          Create your TreeVerse account
+          Create your GreenHope account
         </h2>
       </div>
 
