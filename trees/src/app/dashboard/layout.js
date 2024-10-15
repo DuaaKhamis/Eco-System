@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import WeeklyResetManager from '../WeeklyResetManager/page';
 import { usePathname } from 'next/navigation';
 import { MdEmojiEvents } from "react-icons/md";
 import { FaTree, FaCalendarAlt, FaUsers, FaBars, FaTimes, FaBox, FaChartBar } from 'react-icons/fa';
@@ -74,6 +75,7 @@ const DashboardContent = () => {
   return (
     <div className="p-6">
     <h1 className="text-3xl font-bold mb-6">Dashboard</h1>
+    <WeeklyResetManager></WeeklyResetManager>
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
       <StatCard title="Total Orders" value={stats.totalOrders} icon={FaBox} />
       <StatCard title="Total Users" value={stats.totalUsers} icon={FaUsers} />
