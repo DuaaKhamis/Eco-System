@@ -14,11 +14,21 @@ const usersSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-
   points: {
     type: Number,
     default: 0, // Initial points set to 0
   },
+  weeklyPoints: {
+    type: Number,
+    default: 0,
+  },
+ 
+  coupons: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Coupon",
+    },
+  ],
   eventsParticipated: [
     {
       eventId: {
