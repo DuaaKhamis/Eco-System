@@ -107,74 +107,54 @@ export default function EventsManagement() {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <div className="p-6">
-      <div className="flex justify-between items-center mb-6">
+    <div className="p-4 sm:p-6">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
         <h1 className="text-2xl font-bold text-green-800">Manage Events</h1>
         <button
           onClick={() => setIsAddModalOpen(true)}
-          className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded flex items-center"
+          className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded flex items-center w-full sm:w-auto justify-center"
         >
           <FaPlus className="mr-2" /> Add Event
         </button>
       </div>
 
       {events.length === 0 ? (
-        <p>No events found. Add an event to get started.</p>
+        <p className="text-center py-4">No events found. Add an event to get started.</p>
       ) : (
-        <div className="bg-white shadow-md rounded-lg overflow-hidden">
-          <table className="min-w-full">
+        <div className="overflow-x-auto bg-white shadow-md rounded-lg">
+          <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Name
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Date
-                </th>
-                {/* --Aya-- */}
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Governorate
-                </th>
-                {/* ----- */}
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Location
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Category
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Actions
-                </th>
+                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden sm:table-cell">Governorate</th>
+                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden md:table-cell">Location</th>
+                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden lg:table-cell">Category</th>
+                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
               {events.map((event) => (
                 <tr key={event._id}>
-                  <td className="px-6 py-4 whitespace-nowrap">{event.name}</td>
-                  <td className="px-6 py-4 whitespace-nowrap">
+                  <td className="px-4 py-4 whitespace-nowrap">{event.name}</td>
+                  <td className="px-4 py-4 whitespace-nowrap">
                     {new Date(event.date).toLocaleDateString()}
                   </td>
-                  {/* --Aya-- */}
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    {event.governorate}
-                  </td>
-                  {/* ------ */}
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    {event.location}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    {event.category}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                  <td className="px-4 py-4 whitespace-nowrap hidden sm:table-cell">{event.governorate}</td>
+                  <td className="px-4 py-4 whitespace-nowrap hidden md:table-cell">{event.location}</td>
+                  <td className="px-4 py-4 whitespace-nowrap hidden lg:table-cell">{event.category}</td>
+                  <td className="px-4 py-4 whitespace-nowrap text-right text-sm font-medium">
                     <button
                       onClick={() => setEditingEvent(event)}
                       className="text-indigo-600 hover:text-indigo-900 mr-4"
+                      aria-label="Edit event"
                     >
                       <FaEdit />
                     </button>
                     <button
                       onClick={() => handleDeleteEvent(event._id)}
                       className="text-red-600 hover:text-red-900"
+                      aria-label="Delete event"
                     >
                       <FaTrash />
                     </button>
@@ -199,4 +179,3 @@ export default function EventsManagement() {
     </div>
   );
 }
-

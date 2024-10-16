@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import { FaPlus, FaEdit, FaTrash } from 'react-icons/fa';
 
-
 export default function ProductsPage() {
   const [products, setProducts] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -70,15 +69,17 @@ export default function ProductsPage() {
   };
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Manage Products</h1>
-      <button
-        onClick={() => openModal()}
-        className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 mb-4"
-      >
-        <FaPlus className="inline mr-2" /> Add Product
-      </button>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="flex flex-col sm:flex-row justify-between items-center mb-6">
+        <h1 className="text-2xl font-bold mb-4 sm:mb-0">Manage Products</h1>
+        <button
+          onClick={() => openModal()}
+          className="w-full sm:w-auto bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition duration-300 ease-in-out flex items-center justify-center"
+        >
+          <FaPlus className="mr-2" /> Add Product
+        </button>
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {products.map((product) => (
           <div key={product._id} className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col">
             <div className="h-48 overflow-hidden">
@@ -86,21 +87,23 @@ export default function ProductsPage() {
             </div>
             <div className="p-4 flex-grow flex flex-col">
               <h2 className="text-xl font-semibold mb-2 line-clamp-1">{product.title}</h2>
-              <p className="text-gray-600 mb-4 flex-grow">
-                {truncateText(product.description, 100)}
+              <p className="text-gray-600 mb-4 flex-grow line-clamp-3">
+                {product.description}
               </p>
-              <div className="flex justify-between items-center">
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center space-y-2 sm:space-y-0">
                 <span className="text-lg font-bold">${product.price.toFixed(2)}</span>
                 <div className="space-x-2">
                   <button
                     onClick={() => openModal(product)}
-                    className="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600"
+                    className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 transition duration-300 ease-in-out"
+                    aria-label="Edit product"
                   >
                     <FaEdit />
                   </button>
                   <button
                     onClick={() => handleDelete(product._id)}
-                    className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
+                    className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition duration-300 ease-in-out"
+                    aria-label="Delete product"
                   >
                     <FaTrash />
                   </button>
@@ -111,8 +114,8 @@ export default function ProductsPage() {
         ))}
       </div>
       {isModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-lg w-full max-w-md">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+          <div className="bg-white p-6 rounded-lg w-full max-w-md max-h-[90vh] overflow-y-auto">
             <h2 className="text-xl font-bold mb-4">
               {currentProduct ? 'Edit Product' : 'Add Product'}
             </h2>
@@ -178,17 +181,17 @@ export default function ProductsPage() {
                   required
                 />
               </div>
-              <div className="flex justify-end space-x-2">
+              <div className="flex flex-col sm:flex-row justify-end space-y-2 sm:space-y-0 sm:space-x-2">
                 <button
                   type="button"
                   onClick={closeModal}
-                  className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+                  className="w-full sm:w-auto px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition duration-300 ease-in-out"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                  className="w-full sm:w-auto px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition duration-300 ease-in-out"
                 >
                   {currentProduct ? 'Update' : 'Add'}
                 </button>

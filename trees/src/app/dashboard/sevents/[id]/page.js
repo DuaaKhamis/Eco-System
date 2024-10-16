@@ -85,11 +85,11 @@ export default function EventDetailsPage({ params }) {
   )}&t=&z=14&ie=UTF8&iwloc=B&output=embed`;
 
   return (
-    <div className="min-h-screen bg-green-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-green-50 py-8 px-4 sm:py-12 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         <div className="bg-white rounded-xl shadow-2xl overflow-hidden">
-          <div className="md:flex">
-            <div className="md:w-1/3 relative h-64 md:h-auto">
+          <div className="flex flex-col md:flex-row">
+            <div className="md:w-1/3 h-64 md:h-auto relative">
               <Image
                 src={event.imageUrl || "/placeholder-event.jpg"}
                 alt={event.name}
@@ -98,19 +98,19 @@ export default function EventDetailsPage({ params }) {
                 className="transition-opacity duration-300"
               />
             </div>
-            <div className="md:w-2/3 p-8">
-              <h1 className="text-3xl font-bold text-green-800 mb-2">
+            <div className="md:w-2/3 p-6 sm:p-8">
+              <h1 className="text-2xl sm:text-3xl font-bold text-green-800 mb-2">
                 {event.name}
               </h1>
-              <p className="text-green-600 text-lg mb-4">{event.description}</p>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <p className="text-green-600 text-base sm:text-lg mb-4">{event.description}</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="flex items-center text-green-700">
-                  <Calendar className="mr-2" />
-                  <span>{new Date(event.date).toLocaleDateString()}</span>
+                  <Calendar className="mr-2 flex-shrink-0" />
+                  <span className="text-sm sm:text-base">{new Date(event.date).toLocaleDateString()}</span>
                 </div>
                 <div className="flex items-center text-green-700">
-                  <Clock className="mr-2" />
-                  <span>
+                  <Clock className="mr-2 flex-shrink-0" />
+                  <span className="text-sm sm:text-base">
                     {new Date(event.date).toLocaleTimeString([], {
                       hour: "2-digit",
                       minute: "2-digit",
@@ -118,20 +118,20 @@ export default function EventDetailsPage({ params }) {
                   </span>
                 </div>
                 <div className="flex items-center text-green-700">
-                  <Tag className="mr-2" />
-                  <span>{event.category}</span>
+                  <Tag className="mr-2 flex-shrink-0" />
+                  <span className="text-sm sm:text-base">{event.category}</span>
                 </div>
                 <div className="flex items-center text-green-700">
-                  <MapPin className="mr-2" />
-                  <span>{event.location}</span>
+                  <MapPin className="mr-2 flex-shrink-0" />
+                  <span className="text-sm sm:text-base">{event.location}</span>
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="p-8">
+          <div className="p-6 sm:p-8">
             <div className="mb-8">
-              <h2 className="text-2xl font-semibold text-green-800 mb-4">
+              <h2 className="text-xl sm:text-2xl font-semibold text-green-800 mb-4">
                 Location
               </h2>
               <div className="aspect-w-16 aspect-h-9 rounded-lg overflow-hidden">
@@ -153,7 +153,7 @@ export default function EventDetailsPage({ params }) {
                 onClick={() => setShowParticipants(!showParticipants)}
                 className="w-full bg-green-600 text-white py-3 px-4 rounded-lg hover:bg-green-700 transition-colors duration-200 flex items-center justify-between mb-4"
               >
-                <span className="text-lg font-semibold">Participants</span>
+                <span className="text-base sm:text-lg font-semibold">Participants</span>
                 {showParticipants ? <ChevronUp /> : <ChevronDown />}
               </button>
 
@@ -165,20 +165,20 @@ export default function EventDetailsPage({ params }) {
                       className="bg-green-100 rounded-lg p-4 flex flex-col"
                     >
                       <div className="flex items-center mb-2">
-                        <Users className="text-green-600 mr-2" />
-                        <span className="font-semibold">
+                        <Users className="text-green-600 mr-2 flex-shrink-0" />
+                        <span className="font-semibold text-sm sm:text-base">
                           {participant.name}
                         </span>
                       </div>
                       <div className="flex items-center justify-between">
-                        <span className="text-green-700">
+                        <span className="text-green-700 text-sm sm:text-base">
                           {participant.points} points
                         </span>
                         <button
                           onClick={() => handleAddPoints(participant._id, 10)}
-                          className="bg-green-500 text-white hover:bg-green-600 font-bold py-2 px-4 rounded-full transition-colors duration-200 flex items-center"
+                          className="bg-green-500 text-white hover:bg-green-600 font-bold py-2 px-3 sm:px-4 rounded-full transition-colors duration-200 flex items-center text-sm sm:text-base"
                         >
-                          <Plus className="w-4 h-4 mr-1" />
+                          <Plus className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
                           <span>10</span>
                         </button>
                       </div>
