@@ -5,6 +5,7 @@ import { useCart } from '@/context/CartContext';
 import { Leaf, CreditCard, ShoppingBag, Bell, Truck, MapPin } from 'lucide-react';
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../components/ui/taps";
+import { MdPayment } from 'react-icons/md';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 
@@ -41,6 +42,9 @@ const CheckoutPage = () => {
       await processCardPayment();
     }
   };
+
+
+
 
   const processCardPayment = async () => {
     const token = localStorage.getItem('token');
@@ -130,12 +134,12 @@ const CheckoutPage = () => {
                     </p>
                   </div>
                   <span className="font-bold text-green-600">
-                    ${(item.price * item.quantity).toFixed(2)}
+                    {(item.price * item.quantity).toFixed(2)} JOD
                   </span>
                 </div>
               ))}
               <div className="text-xl font-bold mt-4 text-right text-green-800">
-                Total: ${total.toFixed(2)}
+                Total: {total.toFixed(2)} JOD
               </div>
             </div>
 
@@ -255,20 +259,15 @@ const CheckoutPage = () => {
                         />
                       </div>
                     </div>
-                    <button
-                      type="submit"
-                      className="w-full mt-6 bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 transition duration-200 flex items-center justify-center"
-                      disabled={!isShippingValid()}
-                    >
-                      <CreditCard className="mr-2" />
-                      Proceed to Payment
-                    </button>
+                   
+                      
+                 
                   </form>
                 </TabsContent>
                 <TabsContent value="payment">
                   <h3 className="text-lg font-semibold mb-4 text-green-700 flex items-center">
                     <CreditCard className="mr-2" />
-                    Choose Payment Method
+                    <MdPayment/>
                   </h3>
                   <form onSubmit={handleSubmit}>
                     <div className="mb-4">

@@ -101,8 +101,8 @@ const ProductDetailsPage = () => {
             </div>
             <div>
               <div className="mb-6">
-                <span className="text-3xl font-bold text-gray-900">${product.price}</span>
-                <span className="text-sm text-gray-500 ml-2">USD</span>
+                <span className="text-3xl font-bold text-gray-900">{product.price}</span>
+                <span className="text-sm text-gray-500 ml-2">JOD</span>
               </div>
               <button 
                 onClick={handleAddToCart} 

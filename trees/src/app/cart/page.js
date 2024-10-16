@@ -69,7 +69,7 @@ const CartPage = () => {
                     </h3>
                     {/* <p className="text-gray-600 mb-2">{item.description}</p> */}
                     <p className="text-[#55B76B] font-semibold mb-2">
-                      ${item.price.toFixed(2)}
+                      {item.price.toFixed(2)} JOD
                     </p>
                     <div className="flex items-center justify-between">
                       <div className="flex items-center">
@@ -109,7 +109,7 @@ const CartPage = () => {
             </ul>
             <div className="mt-8 flex flex-col md:flex-row justify-between items-center">
               <p className="text-2xl font-bold text-[#333333] mb-4 md:mb-0">
-                Total: ${total.toFixed(2)}
+                Total: {total.toFixed(2)} JOD
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <motion.button

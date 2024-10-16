@@ -5,7 +5,7 @@ import Link from 'next/link';
 import axios from 'axios';
 import { Search, ChevronLeft, ChevronRight, ChevronDown, Star } from 'lucide-react';
 
-const categories = ['All', 'Clothing', 'Accessories', 'Personal Care', 'Home & Kitchen', 'Fitness', 'Kitchen & Dining', 'Plants & Gifts'];
+const categories = ['All', 'Home & Kitchen', 'Plants & Gifts', 'Kits'];
 
 const ProductCard = ({ product }) => {
   return (
