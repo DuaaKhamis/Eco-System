@@ -167,45 +167,55 @@ const CouponInput = ({ onApplyCoupon, onRemoveCoupon, appliedCoupon }) => {
 
   const handleApplyCoupon = async () => {
     try {
+      const token = localStorage.getItem('token'); 
+      if (!token) {
+        throw new Error('No authentication token found');
+      }
+
       const response = await fetch('/api/couponsValidate', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}` 
         },
         body: JSON.stringify({ code: couponCode }),
       });
 
       if (!response.ok) {
-        throw new Error('Invalid or expired coupon');
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to apply coupon');
       }
 
       const couponData = await response.json();
-      onApplyCoupon(couponData);
+      onApplyCoupon(couponData.coupon);
       setError('');
     } catch (error) {
+      console.error('Coupon application error:', error);
       setError(error.message);
       onRemoveCoupon();
     }
   };
 
   return (
-    <div className="mt-4">
-      <input
-        type="text"
-        value={couponCode}
-        onChange={(e) => setCouponCode(e.target.value)}
-        placeholder="Enter coupon code"
-        className="p-2 border border-gray-300 rounded-md mr-2"
-      />
-      <button
-        onClick={handleApplyCoupon}
-        className="bg-green-500 text-white px-4 py-2 rounded-md"
-      >
-        Apply Coupon
-      </button>
-      {error && <p className="text-red-500 mt-2">{error}</p>}
+    <div className="flex flex-col items-start space-y-2">
+      <div className="flex">
+        <input
+          type="text"
+          value={couponCode}
+          onChange={(e) => setCouponCode(e.target.value)}
+          placeholder="Enter coupon code"
+          className="p-2 border border-gray-300 rounded-md mr-2"
+        />
+        <button
+          onClick={handleApplyCoupon}
+          className="bg-blue-500 text-white p-2 rounded-md"
+        >
+          Apply Coupon
+        </button>
+      </div>
+      {error && <p className="text-red-500">{error}</p>}
       {appliedCoupon && (
-        <p className="text-green-500 mt-2">
+        <p className="text-green-500">
           Coupon applied: {appliedCoupon.code} ({appliedCoupon.discount}% off)
         </p>
       )}
