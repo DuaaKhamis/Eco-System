@@ -22,31 +22,30 @@ export async function POST(request, { params }) {
   try {
     const { userId, points } = await request.json();
     await connectDB();
-
     // First, check if the user is a participant in this event
     const event = await Event.findById(params.id);
     if (!event) {
       return NextResponse.json({ error: 'Event not found' }, { status: 404 });
     }
-
     if (!event.participants.includes(userId)) {
       return NextResponse.json({ error: 'User is not a participant in this event' }, { status: 400 });
     }
-
-    // Update user points
+    // Update user points and weeklyPoints
     const user = await User.findByIdAndUpdate(
       userId,
-      { $inc: { points: points } },
+      {
+        $inc: {
+          points: points,
+          weeklyPoints: points
+        }
+      },
       { new: true }
     );
-
     if (!user) {
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
-
     // Fetch updated event data
-    const updatedEvent = await Event.findById(params.id).populate('participants', 'name email points');
-
+    const updatedEvent = await Event.findById(params.id).populate('participants', 'name email points weeklyPoints');
     return NextResponse.json({
       message: 'Points updated successfully',
       user,
