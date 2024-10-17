@@ -30,6 +30,11 @@ import FAQ from "../components/HomeComponents/FAQ";
 import ShopSection from "../components/HomeComponents/ShopSection";
 import Navbar from "../components/Navbar";
 import Footer from "@/components/Footer";
+import DonationForm from "@/components/Donationform";
+
+
+
+
 
 export default function Home() {
   return (
@@ -45,6 +50,7 @@ export default function Home() {
       <FeatureCards />
       <EarthSection />
       <FAQ />
+      <DonationForm/>
       <ShopFeaturesSection />
       <ShopSection />
       <Footer />
