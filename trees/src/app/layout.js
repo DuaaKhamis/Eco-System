@@ -1,9 +1,8 @@
-
+// RootLayout.js
 import "./globals.css";
-// import Navbar from "../components/Navbar";
-// import Footer from "../components/Footer";
 import { Shadows_Into_Light_Two } from "next/font/google";
-import { CartProvider } from '../context/CartContext';
+import ClientWrapper from './ClientWrapper';
+
 const shadowsIntoLightTwo = Shadows_Into_Light_Two({
   weight: "400",
   subsets: ["latin"],
@@ -20,12 +19,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={shadowsIntoLightTwo.variable}>
       <body className="grid grid-rows-[auto_1fr_auto] min-h-screen bg-white text-green-900 font-sans">
-        <CartProvider>
-        {/* <Navbar /> */}
-        {children}
-        
-        {/* <Footer /> */}
-        </CartProvider>
+        <ClientWrapper>{children}</ClientWrapper>
       </body>
     </html>
   );
